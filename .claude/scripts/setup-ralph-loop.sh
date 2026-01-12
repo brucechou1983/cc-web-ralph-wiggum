@@ -34,6 +34,10 @@ fi
 
 # Create state file
 STATE_FILE="${CLAUDE_PROJECT_DIR}/.claude/ralph-loop.local.md"
+MARKER_FILE="${CLAUDE_PROJECT_DIR}/.claude/ralph-complete.marker"
+
+# Remove any stale marker file from previous runs
+rm -f "$MARKER_FILE"
 
 cat > "$STATE_FILE" << EOF
 active: true
@@ -56,7 +60,10 @@ echo "The loop will continue until:"
 echo "  • Max iterations reached ($MAX_ITERATIONS)"
 echo "  • You run /cancel-ralph"
 if [ -n "$COMPLETION_PROMISE" ]; then
-    echo "  • Claude outputs: $COMPLETION_PROMISE"
+    echo "  • Completion signal detected"
+    echo ""
+    echo "To signal completion, run:"
+    echo "  echo '$COMPLETION_PROMISE' > \"\${CLAUDE_PROJECT_DIR}/.claude/ralph-complete.marker\""
 fi
 echo "══════════════════════════════════════════════════════════════"
 echo ""
