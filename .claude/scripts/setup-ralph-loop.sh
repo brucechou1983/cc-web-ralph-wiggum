@@ -1,5 +1,12 @@
 #!/bin/bash
 
+# Validate CLAUDE_PROJECT_DIR is set
+if [ -z "$CLAUDE_PROJECT_DIR" ]; then
+    echo "Error: CLAUDE_PROJECT_DIR is not set"
+    echo "This script must be run within Claude Code environment."
+    exit 1
+fi
+
 # Parse arguments
 PROMPT=""
 MAX_ITERATIONS=50

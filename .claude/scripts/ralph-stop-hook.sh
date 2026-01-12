@@ -3,6 +3,12 @@
 # Ralph Wiggum Stop Hook
 # Intercepts exit attempts and continues the loop if active
 
+# Validate CLAUDE_PROJECT_DIR is set
+if [ -z "$CLAUDE_PROJECT_DIR" ]; then
+    echo "Error: CLAUDE_PROJECT_DIR is not set" >&2
+    exit 0  # Allow exit on error - don't trap user in broken loop
+fi
+
 RALPH_STATE="${CLAUDE_PROJECT_DIR}/.claude/ralph-loop.local.md"
 RALPH_COMPLETE="${CLAUDE_PROJECT_DIR}/.claude/ralph-complete.marker"
 
